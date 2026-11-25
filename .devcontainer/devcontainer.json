@@ -1,0 +1,42 @@
+{
+  // Entorno del laboratorio "Contenedores DevOps" (CAM Learning / Tecavi).
+  // Se abre con: botón verde "Code" > pestaña "Codespaces" > "Create codespace on main".
+  "name": "Contenedores DevOps · Lab",
+  "build": { "dockerfile": "Dockerfile" },
+
+  "features": {
+    // Docker real dentro del Codespace (build, run, compose, registry local)
+    "ghcr.io/devcontainers/features/docker-in-docker:2": { "moby": false },
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    // Permite al docente entrar con `gh codespace ssh` para dar soporte o probar
+    "ghcr.io/devcontainers/features/sshd:1": {},
+    // Se usa desde la sesión 6 (AWS)
+    "ghcr.io/devcontainers/features/aws-cli:1": {}
+  },
+
+  // 2 núcleos: 1 hora de uso = 2 core-hours de la cuota gratuita (120 al mes)
+  "hostRequirements": { "cpus": 2 },
+
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": { "label": "API Incubación", "onAutoForward": "notify" }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-azuretools.vscode-docker",
+        "GitHub.vscode-github-actions"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.testing.pytestEnabled": true,
+        "python.testing.pytestArgs": ["tests"],
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  }
+}
